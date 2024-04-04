@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
-export const useGeneralStore = defineStore('general', {
+export const useGeneralStore = defineStore("general", {
   state: () => ({
     isLoginOpen: false,
     isEditProfileOpen: false,
@@ -9,9 +9,8 @@ export const useGeneralStore = defineStore('general', {
     isBackUrl: "/",
     posts: null,
     suggested: null,
-    following: null
+    following: null,
   }),
-  actions: {
-    
-  },
-})
+  actions: {},
+  persist: true,
+});

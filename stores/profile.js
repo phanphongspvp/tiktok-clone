@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
-export const useProfileStore = defineStore('profile', {
+export const useProfileStore = defineStore("profile", {
   state: () => ({
     id: "",
     name: "",
@@ -10,7 +10,6 @@ export const useProfileStore = defineStore('profile', {
     posts: null,
     allLikes: 0,
   }),
-  actions: {
-    
-  },
-})
+  actions: {},
+  persist: true,
+});

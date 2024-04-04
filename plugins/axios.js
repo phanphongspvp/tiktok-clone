@@ -1,13 +1,14 @@
 import axios from "axios";
 
-export default defineNuxtPlugin((NuxtApp) => {
+export default defineNuxtPlugin(() => {
+  const apiClient = axios.create({
+    baseURL: "http://localhost:8000",
+    withCredentials: true,
+  });
 
-    axios.defaults.withCredentials = true;
-    axios.defaults.baseUrl = "http://localhost:8000"
-
-    return {
-        provide: {
-            axios: axios
-        }
-    }
-})
+  return {
+    provide: {
+      axios: apiClient,
+    },
+  };
+});
