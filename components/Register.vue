@@ -9,7 +9,7 @@
             v-model:input="name"
             inputType="text"
             :autoFocus="true"
-            error=""
+            :error="errors && errors.name ? errors.name[0]: ''"
         />
     </div>
 
@@ -18,7 +18,7 @@
             placeholder="Email address"
             v-model:input="email"
             inputType="email"
-            error=""
+            :error="errors && errors.email ? errors.email[0]: ''"
         />
     </div>
 
@@ -27,6 +27,7 @@
             placeholder="Password"
             v-model:input="password"
             inputType="password"
+            :error="errors && errors.password ? errors.password[0]: ''"
         />
     </div>
 
@@ -35,6 +36,7 @@
             placeholder="Confirm Password"
             v-model:input="confirmPassword"
             inputType="password"
+            :error="errors && errors.confirmPassword ? errors.confirmPassword[0]: ''"
         />
     </div>
 
@@ -44,7 +46,7 @@
         <button
             :disabled="(!name || !email || !password || !confirmPassword)"
             :class="(!name || !email || !password || !confirmPassword) ? 'bg-gray-200' : 'bg-[#F02C56]'"
-            @click="$event => login()"
+            @click="$event => register()"
             class="w-full text-[17px] font-semibold text-white py-3 rounded-sm"
         >
             Sign up
@@ -58,4 +60,25 @@ const email = ref(null);
 const password = ref(null);
 const confirmPassword = ref(null);
 const errors = ref(null);
+const { $userStore, $generalStore } = useNuxtApp();
+
+const register = async () => {
+    errors.value = null;
+
+    try {
+        await $userStore.getTokens();
+        await $userStore.register(
+            name.value,
+            email.value,
+            password.value,
+            confirmPassword.value
+        );
+        await $userStore.getUser();
+
+        $generalStore.isLoginOpen = false;
+    } catch (error) {
+        console.log(error);
+        errors.value = error.response.data.errors;
+    }
+}
 </script>
